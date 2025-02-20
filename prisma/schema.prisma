@@ -24,4 +24,6 @@ model Post {
   created_at DateTime @default(now())
   userId     String
   user       User     @relation(fields: [userId], references: [id])
+
+  @@map("posts")
 }
