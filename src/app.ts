@@ -1,11 +1,10 @@
-import { PrismaClient } from "@prisma/client"
 import fastify from "fastify"
 import { z } from "zod"
-import { appRoutes } from "./http/routes"
+import {userRoutes } from "./http/controllers/users/routes"
 
 export const app = fastify()
 
-app.register(appRoutes)
+app.register(userRoutes)
 
 app.setErrorHandler((error, request, reply) => {
     if (error instanceof z.ZodError) {
