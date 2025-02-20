@@ -11,6 +11,16 @@ export async function register(request: FastifyRequest,reply: FastifyReply) {//c
 
     const { name, email, password } = registerBodySchema.parse(request.body)
 
+    const userWithSameEmail = await prisma.user.findUnique({
+        where: {
+            email
+        }
+    })
+
+    if (userWithSameEmail) {
+        return reply.status(409).send("Já existe um usuário com esse email.")
+    }
+
     await prisma.user.create({
         data: {
             name,
