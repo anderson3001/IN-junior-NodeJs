@@ -3,6 +3,10 @@ import { prisma } from "../../http/lib/prisma";
 import { UsersRepository, UserUpdateInput } from "../users-repostory";
 
 export class PrismaUsersRepository implements UsersRepository {
+    async findAll(): Promise<User[]> {
+        const users = await prisma.user.findMany()
+        return users
+    }
     async update(id: string, data: UserUpdateInput): Promise<User | null> {
         const user = await prisma.user.update({
             where: {
