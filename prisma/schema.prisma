@@ -12,6 +12,7 @@ model User {
   name     String
   email    String @unique
   password String
+  photo    String @default("https://cdn-icons-png.flaticon.com/512/17/17004.png")
   posts    Post[]
 
   @@map("users")
