@@ -5,8 +5,16 @@ import { postsRoutes } from "./http/controllers/posts/routes"
 import fastifyJwt from "@fastify/jwt"
 import { env } from "./env"
 import fastifyCookie from "@fastify/cookie"
+import fastifyCors from "@fastify/cors"
 
 export const app = fastify()
+
+app.register(fastifyCors, {
+    origin: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+})
 
 app.register(fastifyJwt, {
     secret: env.JWT_SECRET,
