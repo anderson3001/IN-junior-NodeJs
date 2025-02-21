@@ -4,6 +4,11 @@ import { UsersRepository } from "../users-repostory";
 
 export class PrismaUsersRepository implements UsersRepository {
     async delete(id: string): Promise<User | null> {
+        const posts = await prisma.post.deleteMany({//pra deletar os posts antes de deletar o usuario
+            where: {
+                userId: id
+            }
+        })
         const user = await prisma.user.delete({
             where: {
                 id
