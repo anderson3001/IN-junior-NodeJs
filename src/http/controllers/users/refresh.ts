@@ -1,7 +1,4 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { z } from "zod"
-import { PrismaUsersRepository } from "../../../repositories/prisma/prisma-users-repository"
-import { AuthenticateUseCase } from "../../../use-cases/authenticate-use-case"
 
 export async function refresh(request: FastifyRequest,reply: FastifyReply) {//criando usuario
 
