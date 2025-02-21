@@ -2,21 +2,21 @@ import { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 import { ResourceNotFoundError } from "../../../use-cases/errors/resource-not-found-error"
 import { PrismaPostsRepository } from "../../../repositories/prisma/prisma-posts-repository"
-import { GetPostUseCase } from "../../../use-cases/get-post-use-case"
+import { GetPostByUserUseCase } from "../../../use-cases/get-post-by-user-use-case"
 
-export async function get(request: FastifyRequest,reply: FastifyReply) {
+export async function getByUser(request: FastifyRequest,reply: FastifyReply) {
+
     const getParamsSchema = z.object({
-        postId: z.string().uuid()
+        userId: z.string().uuid()
     })
 
-    const { postId } = getParamsSchema.parse(request.params)
-
+    const { userId } = getParamsSchema.parse(request.params)
     try {
         const prismaPostRepository = new PrismaPostsRepository()
-        const getPostUseCase = new GetPostUseCase(prismaPostRepository)
+        const getPostByUserUseCase = new GetPostByUserUseCase(prismaPostRepository)
 
-        const post = await getPostUseCase.execute({
-            postId    
+        const post = await getPostByUserUseCase.execute({
+            userId
         })
 
         return reply.status(200).send({ post })

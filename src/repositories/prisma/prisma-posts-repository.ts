@@ -3,6 +3,14 @@ import { prisma } from "../../http/lib/prisma";
 import { PostsRepository, PostUpdateInput } from "../posts-repository";
 
 export class PrismaPostsRepository implements PostsRepository {
+    async findByUserId(userId: string): Promise<Post[]> {
+        const posts = await prisma.post.findMany({
+            where: {
+                userId
+            }
+        })
+        return posts
+    }
     async findAll(): Promise<Post[]> {
             const posts = await prisma.post.findMany()
             return posts
