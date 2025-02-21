@@ -1,8 +1,20 @@
 import { Post, Prisma } from "@prisma/client";
 import { prisma } from "../../http/lib/prisma";
-import { PostsRepository } from "../posts-repository";
+import { PostsRepository, PostUpdateInput } from "../posts-repository";
 
 export class PrismaPostsRepository implements PostsRepository {
+    async update(id: string, data: PostUpdateInput): Promise<Post | null> {
+        const post = await prisma.post.update({
+            where: {
+                id
+            },
+            data: {
+                title: data.title,
+                content: data.content
+            }
+        })
+        return post
+    }
     async delete(id: string): Promise<Post | null> {
             const post = await prisma.post.delete({
                 where: {
