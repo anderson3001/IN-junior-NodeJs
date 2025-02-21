@@ -1,8 +1,16 @@
-import { Prisma} from "@prisma/client";
+import { Prisma, User} from "@prisma/client";
 import { prisma } from "../../http/lib/prisma";
 import { UsersRepository } from "../users-repostory";
 
 export class PrismaUsersRepository implements UsersRepository {
+    async delete(id: string): Promise<User | null> {
+        const user = await prisma.user.delete({
+            where: {
+                id
+            }
+        })
+        return user 
+    }
     async findById(id: string){
         const user = await prisma.user.findUnique({
             where: {
